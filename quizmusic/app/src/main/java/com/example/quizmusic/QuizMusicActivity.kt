@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_fullscreen.*
  */
 class QuizMusicActivity : AppCompatActivity(), QuizQuestionAdapter.ClipPlayer {
     private var mediaPlayer: MediaPlayer? = null
-    private var answerMode = true
+    private var answerMode = false
     private var currentPlayingAudio = 0
     private var mVisible: Boolean = false
 
@@ -34,20 +34,29 @@ class QuizMusicActivity : AppCompatActivity(), QuizQuestionAdapter.ClipPlayer {
 
         val questions: List<Question> = listOf(
             Question(R.raw.question_1, R.string.answer_1),
-            Question(R.raw.question_2, R.string.answer_2)//,
-//            Question(R.raw.question_3, R.string.answer_3),
-//            Question(R.raw.question_4, R.string.answer_4),
-//            Question(R.raw.question_5, R.string.answer_5),
-//            Question(R.raw.question_6, R.string.answer_6),
-//            Question(R.raw.question_7, R.string.answer_7),
-//            Question(R.raw.question_8, R.string.answer_8),
-//            Question(R.raw.question_9, R.string.answer_9),
-//            Question(R.raw.question_10, R.string.answer_10)
+            Question(R.raw.question_2, R.string.answer_2),
+            Question(R.raw.question_3, R.string.answer_3),
+            Question(R.raw.question_4, R.string.answer_4),
+            Question(R.raw.question_5, R.string.answer_5),
+            Question(R.raw.question_6, R.string.answer_6),
+            Question(R.raw.question_7, R.string.answer_7),
+            Question(R.raw.question_8, R.string.answer_8),
+            Question(R.raw.question_9, R.string.answer_9),
+            Question(R.raw.question_10, R.string.answer_10)
         )
 
         val questionAdapter = QuizQuestionAdapter(questions, this)
         qmQuestionList.layoutManager = GridLayoutManager(this, 2)
         qmQuestionList.adapter = questionAdapter
+
+        qmAnswerToggle.setOnCheckedChangeListener {_, isChecked ->
+            if(isChecked) {
+                answerMode = true
+            } else {
+                answerMode = false
+                // @TODO Clear all answers
+            }
+        }
     }
 
     override fun playClip(audioResourceID: Int, position: Int, questionViewID: Int, answerViewID: Int) {
